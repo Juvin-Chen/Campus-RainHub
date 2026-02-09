@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus RainHub - 校园共享雨具系统</title>
+    <title>Campus RainHub - 校园共享雨伞服务平台</title>
     <style>
         :root {
             --primary: #3b82f6;
@@ -15,20 +16,37 @@
             --gradient: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
-        
-        body { background-color: var(--dark-bg); color: var(--text-main); line-height: 1.6; }
-        
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
 
         /* Header */
         header {
             padding: 6rem 0 4rem;
             text-align: center;
             background: radial-gradient(circle at top, #1e293b 0%, #0f172a 70%);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         h1 {
@@ -50,12 +68,25 @@
             margin-top: 1.5rem;
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
         }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6); }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+        }
 
         /* Gallery Section */
-        .gallery-section { padding: 4rem 0; }
-        
-        .tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+        .gallery-section {
+            padding: 4rem 0;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
         .tab-btn {
             background: transparent;
             border: 1px solid var(--text-sub);
@@ -66,6 +97,7 @@
             font-size: 1.1rem;
             transition: all 0.3s ease;
         }
+
         .tab-btn.active {
             background: var(--primary);
             border-color: var(--primary);
@@ -79,20 +111,28 @@
             gap: 2rem;
             animation: fadeIn 0.5s ease;
         }
-        .grid.active { display: grid; }
+
+        .grid.active {
+            display: grid;
+        }
 
         .card {
             background: var(--card-bg);
             border-radius: 16px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: 0.3s;
             cursor: pointer;
             display: flex;
             flex-direction: column;
         }
-        .card:hover { transform: translateY(-5px); border-color: var(--secondary); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
         .card-img-wrapper {
             width: 100%;
             height: 240px;
@@ -102,42 +142,113 @@
             justify-content: center;
             overflow: hidden;
         }
-        
-        .card img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; /* 保证图片填满格子 */
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 保证图片填满格子 */
             object-position: top center;
             transition: 0.5s;
         }
-        .card:hover img { transform: scale(1.05); }
 
-        .card-body { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff; }
-        .card-desc { font-size: 0.95rem; color: var(--text-sub); line-height: 1.5; }
-        .card-meta { margin-top: 1rem; font-size: 0.8rem; color: #64748b; font-family: monospace; }
+        .card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            line-height: 1.5;
+        }
+
+        .card-meta {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #64748b;
+            font-family: monospace;
+        }
 
         /* Modal */
         .modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            display: none; justify-content: center; align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
             z-index: 9999;
             backdrop-filter: blur(5px);
         }
-        .modal.open { display: flex; animation: fadeIn 0.2s; }
-        .modal img { max-width: 95%; max-height: 95%; border-radius: 4px; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
-        .modal-close { position: absolute; top: 20px; right: 30px; color: white; font-size: 4rem; cursor: pointer; line-height: 1; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .modal.open {
+            display: flex;
+            animation: fadeIn 0.2s;
+        }
+
+        .modal img {
+            max-width: 95%;
+            max-height: 95%;
+            border-radius: 4px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 4rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         @media(max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .grid { grid-template-columns: 1fr; }
-            .card-img-wrapper { height: 200px; }
+            h1 {
+                font-size: 2rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-img-wrapper {
+                height: 200px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <header>
@@ -151,11 +262,17 @@
             <a href="https://github.com/Juvin-Chen/CampusRainhub" target="_blank" class="btn">
                 ⭐ View on GitHub
             </a>
-            
+
             <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-                <span style="background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:4px; font-size:0.8rem; color:#60a5fa;">C++ 17</span>
-                <span style="background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:4px; font-size:0.8rem; color:#60a5fa;">Qt 6.9.3</span>
-                <span style="background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:4px; font-size:0.8rem; color:#60a5fa;">MySQL 8.0</span>
+                <span
+                    style="background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:4px; font-size:0.8rem; color:#60a5fa;">C++
+                    17</span>
+                <span
+                    style="background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:4px; font-size:0.8rem; color:#60a5fa;">Qt
+                    6.9.3</span>
+                <span
+                    style="background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:4px; font-size:0.8rem; color:#60a5fa;">MySQL
+                    8.0</span>
             </div>
         </div>
     </header>
@@ -169,7 +286,8 @@
 
             <div id="client-grid" class="grid active">
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client01_用户登录首页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client01_用户登录首页面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">01. 用户登录</div>
                         <div class="card-desc">系统启动后的首屏，提供清爽的登录入口。</div>
@@ -177,7 +295,8 @@
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client02_提示刷卡页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client02_提示刷卡页面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">02. 刷卡交互提示</div>
                         <div class="card-desc">提示用户放置校园卡，模拟 NFC/RFID 硬件交互。</div>
@@ -185,7 +304,8 @@
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client03_提示输入账号信息页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client03_提示输入账号信息页面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">03. 账号输入</div>
                         <div class="card-desc">当未检测到实体卡时，支持手动输入账号。</div>
@@ -193,7 +313,8 @@
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client04_首次登录设置密码激活账号页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client04_首次登录设置密码激活账号页面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">04. 账号激活</div>
                         <div class="card-desc">新用户首次使用需设置密码以激活账号。</div>
@@ -201,7 +322,8 @@
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client05_非首次登录直接输入密码页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client05_非首次登录直接输入密码页面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">05. 密码验证</div>
                         <div class="card-desc">老用户登录时的安全密码校验界面。</div>
@@ -209,15 +331,17 @@
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client06_重置密码页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client06_重置密码页面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">06. 密码重置</div>
-                        <div class="card-desc">用户忘记密码时的自助找回流程。</div>
+                        <div class="card-desc">提供用户自助式密码更改功能。</div>
                         <div class="card-meta">Client06_重置密码页面.png</div>
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client07_借还伞主界面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client07_借还伞主界面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">07. 自助服务大厅</div>
                         <div class="card-desc">核心主界面，显示个人中心、站点地图、借/还入口。</div>
@@ -225,7 +349,8 @@
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client08_个人信息页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client08_个人信息页面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">08. 个人中心</div>
                         <div class="card-desc">展示用户信息、余额。</div>
@@ -233,7 +358,8 @@
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client09_服务说明页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client09_服务说明页面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">09. 服务指南</div>
                         <div class="card-desc">内置的帮助文档，说明计费规则与使用方法。</div>
@@ -241,7 +367,8 @@
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client10_站点情况说明页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client10_站点情况说明页面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">10. 站点地图详情</div>
                         <div class="card-desc">可视化展示各楼栋站点位置、在线情况、剩余雨伞数量。</div>
@@ -249,7 +376,8 @@
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client11_借伞页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client11_借伞页面.png" loading="lazy">
+                    </div>
                     <div class="card-body">
                         <div class="card-title">11. 借伞执行</div>
                         <div class="card-desc">系统分配槽位并弹出雨伞。</div>
@@ -257,7 +385,8 @@
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client12_还伞页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Client12_还伞页面.png" loading="lazy">
+                    </div>
                     <div class="card-body">
                         <div class="card-title">12. 还伞结算</div>
                         <div class="card-desc">归还成功后的结算清单与费用扣除提示。</div>
@@ -268,7 +397,8 @@
 
             <div id="admin-grid" class="grid">
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Admin01_管理员登录首页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Admin01_管理员登录首页面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">01. 管理员鉴权</div>
                         <div class="card-desc">独立的后台管理入口，与用户端物理隔离。</div>
@@ -276,7 +406,8 @@
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Admin02_站点雨具概览页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Admin02_站点雨具概览页面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">02. 站点全局概览</div>
                         <div class="card-desc">监控所有站点的设备在线率。</div>
@@ -284,7 +415,8 @@
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Admin03_站点雨具概览页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Admin03_站点雨具概览页面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">03. 站点详情管理</div>
                         <div class="card-desc">针对单个站点的库存干预与维护模式。</div>
@@ -292,7 +424,8 @@
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Admin04_用户管理页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Admin04_用户管理页面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">04. 用户审计</div>
                         <div class="card-desc">全校用户列表，支持密码重置。</div>
@@ -300,7 +433,8 @@
                     </div>
                 </div>
                 <div class="card" onclick="openModal(this)">
-                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Admin05_订单流水页面.png" loading="lazy"></div>
+                    <div class="card-img-wrapper"><img src="./pages_UI_Display_Images/Admin05_订单流水页面.png"
+                            loading="lazy"></div>
                     <div class="card-body">
                         <div class="card-title">05. 财务流水</div>
                         <div class="card-desc">每一笔借还订单的记录查询。</div>
@@ -320,8 +454,8 @@
         function switchTab(type) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.grid').forEach(g => g.classList.remove('active'));
-            
-            if(type === 'client') {
+
+            if (type === 'client') {
                 document.querySelectorAll('.tab-btn')[0].classList.add('active');
                 document.getElementById('client-grid').classList.add('active');
             } else {
@@ -339,4 +473,5 @@
         }
     </script>
 </body>
+
 </html>

@@ -6,7 +6,7 @@
 
 ### Project Introduction
 
-**Campus RainHub** aims to **reshape campus micro-mobility**. It is a shared rain gear service platform integrating intelligent user terminal interaction, real-time backend monitoring, and data visualization for decision-making.
+**Campus RainHub** aims to **reshape campus micro-mobility**. It is a shared umbrella service platform integrating intelligent user terminal interaction, real-time backend monitoring, and data visualization for decision-making.
 
 Developed using **C++17** and **Qt 6.9.3**, **built with CMake**, and relying on **MySQL 8.0** for data storage, it is an IoT solution tailored specifically for campus scenarios.
 

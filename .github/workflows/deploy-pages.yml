@@ -29,7 +29,6 @@ jobs:
           mkdir -p _site
           cp index.html _site/index.html
           cp -r pages_UI_Display_Images _site/pages_UI_Display_Images
-          cp -r assets _site/assets
           touch _site/.nojekyll
 
       - name: Setup Pages

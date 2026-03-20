@@ -451,6 +451,17 @@
     </div>
 
     <script>
+        function warmupGridImages(gridId, count = 4) {
+            const grid = document.getElementById(gridId);
+            if (!grid) return;
+            const images = Array.from(grid.querySelectorAll('img[data-src]')).slice(0, count);
+            images.forEach(img => {
+                if (!img.getAttribute('src')) {
+                    img.setAttribute('src', img.getAttribute('data-src'));
+                }
+            });
+        }
+
         function switchTab(type) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.grid').forEach(g => g.classList.remove('active'));
@@ -458,19 +469,61 @@
             if (type === 'client') {
                 document.querySelectorAll('.tab-btn')[0].classList.add('active');
                 document.getElementById('client-grid').classList.add('active');
+                warmupGridImages('client-grid');
             } else {
                 document.querySelectorAll('.tab-btn')[1].classList.add('active');
                 document.getElementById('admin-grid').classList.add('active');
+                warmupGridImages('admin-grid');
             }
         }
 
+        function setupCardImageLazyLoading() {
+            const images = Array.from(document.querySelectorAll('.card img'));
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const img = entry.target;
+                    const realSrc = img.getAttribute('data-src');
+                    if (realSrc && !img.getAttribute('src')) {
+                        img.setAttribute('src', realSrc);
+                    }
+                    observer.unobserve(img);
+                });
+            }, {
+                rootMargin: '300px 0px'
+            });
+
+            images.forEach((img, index) => {
+                const realSrc = img.getAttribute('src');
+                if (!realSrc) return;
+                img.setAttribute('data-src', realSrc);
+                img.setAttribute('decoding', 'async');
+                if (index === 0) {
+                    img.setAttribute('loading', 'eager');
+                    img.setAttribute('fetchpriority', 'high');
+                    return;
+                }
+                img.removeAttribute('src');
+                img.setAttribute('loading', 'lazy');
+                img.setAttribute('fetchpriority', 'low');
+                observer.observe(img);
+            });
+
+            warmupGridImages('client-grid');
+        }
+
         function openModal(card, evt) {
-            // 获取原图路径
-            const src = card.querySelector('img').getAttribute('src');
+            const imageElement = card.querySelector('img');
+            const src = imageElement.getAttribute('data-src') || imageElement.getAttribute('src');
+            if (src && !imageElement.getAttribute('src')) {
+                imageElement.setAttribute('src', src);
+            }
             document.getElementById('modalImg').src = src;
             document.getElementById('imgModal').classList.add('open');
             if (evt) evt.stopPropagation();
         }
+
+        setupCardImageLazyLoading();
     </script>
 </body>
 
